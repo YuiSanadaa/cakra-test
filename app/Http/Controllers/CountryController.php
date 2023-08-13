@@ -53,7 +53,6 @@ class CountryController extends Controller
             ]
         ]);
         $countries = json_decode($response->getBody(), true);
-        dd($countries);
         return view('management.country.show', compact('countries'));
     }
 

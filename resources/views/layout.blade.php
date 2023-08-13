@@ -104,3 +104,4 @@
         $('#changePasswordModal').modal('show');
     });
 </script>
+@yield('script')
