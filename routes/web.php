@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CountryController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,4 +32,8 @@ Route::group(['middleware' => ['jwt'], 'namespace' => 'App\Http'], function () {
     Route::get('/user', [AuthController::class, 'getUser']);
     Route::get('/change-password', [AuthController::class, 'changePasswordView'])->name('change_password');
     Route::post('/change-password', [AuthController::class, 'changePassword'])->name('change-password.post');
+    Route::prefix('country')->group(function () {
+        Route::get('/index', [CountryController::class, 'index'])->name('index-country'); 
+        Route::get('/show/{id}', [CountryController::class, 'show'])->name('countries.show');
+    });
 });
