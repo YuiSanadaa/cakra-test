@@ -12,11 +12,20 @@ class JwtMiddleware
     public function handle($request, Closure $next)
     {
         $token = Session::get('jwt_token');
-
-        if (!$token) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+        try {
+            $tokenParts = explode('.', $token);
+            $payload = base64_decode($tokenParts[1]);
+            $decodedPayload = json_decode($payload, true);
+            $expiration = $decodedPayload['exp'];
+            $currentTime = time();
+            if ($expiration < $currentTime) {
+                Session::forget('jwt_token');
+                return redirect('login');
+            }
+            return $next($request);
+        } catch (\Exception $e) {
+            Session::forget('jwt_token');
+            return redirect('login');
         }
-
-        return $next($request);
     }
 }

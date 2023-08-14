@@ -3,7 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CountryController;
-
+use App\Http\Controllers\ProvinceController;
+use App\Http\Controllers\CityController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,21 +20,34 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware(['checkJwtSession'])->group(function () {
-    Route::get('login', [AuthController::class, 'index'])->name('login');
-    Route::post('login', [AuthController::class, 'login'])->name('login.post');
-    Route::get('register', [AuthController::class, 'registration'])->name('register');
-    Route::post('register', [AuthController::class, 'register'])->name('register.post');
-});
+Route::get('login', [AuthController::class, 'index'])->name('login');
+Route::post('login', [AuthController::class, 'login'])
+    ->name('login.post');
+
+Route::get('register', [AuthController::class, 'registration'])
+    ->name('register');
+Route::post('register', [AuthController::class, 'register'])
+    ->name('register.post');
 
 Route::group(['middleware' => ['jwt'], 'namespace' => 'App\Http'], function () {
-    Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard'); 
-    Route::any('/logout', [AuthController::class, 'logout'])->name('logout');
-    Route::get('/user', [AuthController::class, 'getUser']);
-    Route::get('/change-password', [AuthController::class, 'changePasswordView'])->name('change_password');
-    Route::post('/change-password', [AuthController::class, 'changePassword'])->name('change-password.post');
+    Route::any('/logout', [AuthController::class, 'logout'])
+        ->name('logout');
+    Route::get('/dashboard', [AuthController::class, 'dashboard'])
+        ->name('dashboard');
+    Route::get('/change-password', [AuthController::class, 'changePasswordView'])
+        ->name('change_password');
+    Route::post('/change-password', [AuthController::class, 'changePassword'])
+        ->name('change-password.post');
     Route::prefix('country')->group(function () {
-        Route::get('/index', [CountryController::class, 'index'])->name('index-country'); 
-        Route::get('/show/{id}', [CountryController::class, 'show'])->name('countries.show');
+        Route::get('/index', [CountryController::class, 'index'])
+            ->name('index-country');
+    });
+    Route::prefix('province')->group(function () {
+        Route::get('/index', [ProvinceController::class, 'index'])
+            ->name('index-province');
+    });
+    Route::prefix('city')->group(function () {
+        Route::get('/index', [CityController::class, 'index'])
+            ->name('index-province');
     });
 });
