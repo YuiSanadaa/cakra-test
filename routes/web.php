@@ -48,6 +48,6 @@ Route::group(['middleware' => ['jwt'], 'namespace' => 'App\Http'], function () {
     });
     Route::prefix('city')->group(function () {
         Route::get('/index', [CityController::class, 'index'])
-            ->name('index-province');
+            ->name('index-city');
     });
 });

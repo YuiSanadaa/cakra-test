@@ -74,9 +74,9 @@
                             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
                                 aria-haspopup="true" aria-expanded="false">Management</a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Country</a>
-                                <a class="dropdown-item" href="#">Province</a>
-                                <a class="dropdown-item" href="#">City</a>
+                                <a class="dropdown-item" href="{{ route('index-country') }}">Country</a>
+                                <a class="dropdown-item" href="{{ route('index-province') }}">Province</a>
+                                <a class="dropdown-item" href="{{ route('index-city') }}">City</a>
                             </div>
                         </li>
                         <li class="nav-item">
